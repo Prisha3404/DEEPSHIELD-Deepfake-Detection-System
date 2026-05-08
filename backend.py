@@ -1,13 +1,7 @@
-# ============================================================
-# backend.py — DeepShield FastAPI Backend
-#
 # Loads all 5 models at startup, exposes /predict endpoint.
 # Run with: uvicorn backend:app --reload --port 8000
-#
 # The React frontend calls POST /predict with the image file
 # and receives JSON with per-model scores + final verdict.
-# ============================================================
-
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import torch
@@ -31,7 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Model registry ───────────────────────────────────────────
+# Model registry 
 MODELS_CONFIG = [
     {
         "id":    "haywoodsloan/ai-image-detector-deploy",
@@ -73,7 +67,7 @@ MODELS_CONFIG = [
 # Fake-label keywords — handles different label naming conventions
 FAKE_KEYWORDS = ["fake", "deepfake", "artificial", "ai", "generated", "synthetic"]
 
-# ── Global model store (loaded once at startup) ──────────────
+# Global model store (loaded once at startup)
 loaded_models = []
 
 def get_fake_idx(model) -> int:
@@ -114,7 +108,7 @@ async def load_models():
     print(f"\n[DeepShield] {ok_count}/5 models ready. Listening on http://localhost:8000\n")
 
 
-# ── Face Detection Setup ─────────────────────────────────────
+# Face Detection Setup 
 CASCADE_PATH = "haarcascade_frontalface_default.xml"
 
 def ensure_cascade():
@@ -135,11 +129,7 @@ def detect_faces(pil_img: Image.Image) -> list:
 
 
 def get_exif(pil_img: Image.Image) -> dict:
-    """
-    Extract EXIF metadata.
-    Real camera photos have EXIF (device, datetime, GPS).
-    AI-generated images almost never do — a forensic signal.
-    """
+    #Extract EXIF metadata.
     try:
         raw = pil_img._getexif()
         if not raw:
@@ -178,9 +168,8 @@ def majority_vote(results: list) -> str:
     elif real_votes >= 3:
         return "REAL"
     return "UNCERTAIN"
-
-
-# ── API Endpoints ────────────────────────────────────────────
+    
+# API Endpoints 
 
 @app.get("/")
 def root():

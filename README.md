@@ -80,7 +80,8 @@ npm run dev
 ```
 Open:
 http://localhost:5173
-
+We can also view the frontend at "deepshield-three.vercel.app"
+(working on deployin the backend here too)
 ## Future Improvements
 
 * Video deepfake detection

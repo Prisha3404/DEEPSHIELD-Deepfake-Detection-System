@@ -1,4 +1,4 @@
-\# ## DeepShield — Deepfake Detection System
+ ## DeepShield — Deepfake Detection System
 A multi-model ensemble deepfake detection system built using **React + FastAPI + Vision Transformers (ViT)**.
 DeepShield allows users to upload an image and uses **five specialized AI models** to analyze whether the image is **real or AI-generated (fake)**. Instead of relying on a single detector, the system uses an **ensemble voting approach**, improving reliability and reducing false predictions.
 
